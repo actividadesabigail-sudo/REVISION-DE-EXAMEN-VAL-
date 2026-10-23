@@ -1,0 +1,517 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+
+<title>Ficha de errores de Val</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600..800&display=swap">
+<style>
+/* Concepto: la misma libreta frambuesa de la plataforma de Val; cada error es una hoja con su óvalo marcado
+   y su explicación en español, en inglés y con un ejemplo de la vida diaria. */
+:root{
+  --bg:#fbf3f6; --surface:#ffffff; --surface-2:#f8e8ef; --ink:#2a1720; --muted:#7a5965; --line:#f0d9e3;
+  --accent:#ad2d68; --accent-soft:#fbe2ee; --on-accent:#ffffff; --mark:#ffe27a; --mark-ink:#2a1720;
+  --ok:#17845a; --ok-soft:#dff5ea; --bad:#c2403a; --bad-soft:#fde6e4; --warn:#a5650a; --warn-soft:#fff0d6;
+  --bulb:#f2b705; --stem:#7a6f8f; --apple-soft:#fff7dc;
+  --font-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --font-body:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#170f13; --surface:#23171d; --surface-2:#30212a; --ink:#f7eaf0; --muted:#c4a6b3; --line:#3f2b35;
+  --accent:#ff8bbb; --accent-soft:#48223a; --on-accent:#2a0b1a; --mark:#6b5a17; --mark-ink:#fff6d2;
+  --ok:#5fd39f; --ok-soft:#173627; --bad:#ff8a80; --bad-soft:#3d1f1d; --warn:#ffc56b; --warn-soft:#3a2b12;
+  --bulb:#ffd34d; --stem:#a99fbe; --apple-soft:#332a12; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#170f13; --surface:#23171d; --surface-2:#30212a; --ink:#f7eaf0; --muted:#c4a6b3; --line:#3f2b35;
+  --accent:#ff8bbb; --accent-soft:#48223a; --on-accent:#2a0b1a; --mark:#6b5a17; --mark-ink:#fff6d2;
+  --ok:#5fd39f; --ok-soft:#173627; --bad:#ff8a80; --bad-soft:#3d1f1d; --warn:#ffc56b; --warn-soft:#3a2b12;
+  --bulb:#ffd34d; --stem:#a99fbe; --apple-soft:#332a12; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:22px 64px;display:grid;gap:18px}
+h1,h2,h3{font-family:var(--font-display);line-height:1.15;margin:0;text-wrap:balance}
+h1{font-size:clamp(1.7rem,5vw,2.3rem)} h2{font-size:1.35rem} h3{font-size:1.05rem}
+p{margin:0} b{font-weight:700}
+[lang="en"]{font-style:italic}
+.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.sub{color:var(--muted)}
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.tile .n{font-family:var(--font-display);font-size:1.7rem;font-variant-numeric:tabular-nums}
+.tile .l{font-size:.85rem;color:var(--muted)}
+.tile.hot{background:var(--accent-soft);border-color:transparent}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:12px}
+.panel.p1{border:2px solid var(--accent)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.two>div{min-width:0;background:var(--surface-2);border-radius:12px;padding:12px;display:grid;gap:6px;align-content:start}
+.two h3{font-size:.95rem}
+.mini{display:grid;gap:4px;font-size:.92rem}
+.mini span{display:block}
+.mini .k{font-weight:700;display:inline-block;min-width:1.6em;margin-right:4px}
+.callout{background:var(--mark);color:var(--mark-ink);border-radius:12px;padding:12px 14px}
+.steps{margin:0;padding-left:1.3em;display:grid;gap:4px}
+.idx{display:flex;flex-wrap:wrap;gap:6px}
+.idx a{display:inline-grid;place-items:center;min-width:2.3em;height:2.3em;border-radius:999px;text-decoration:none;font-weight:700;font-variant-numeric:tabular-nums;border:2px solid var(--line);color:var(--ink);background:var(--surface)}
+.idx a.swap{border-color:var(--accent);color:var(--accent)}
+.legend{font-size:.85rem;color:var(--muted)}
+.unit{display:grid;gap:4px;margin-top:8px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px;scroll-margin-top:12px}
+.chead{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.qn{display:grid;place-items:center;width:2.4em;height:2.4em;border-radius:50%;background:var(--accent);color:var(--on-accent);font-family:var(--font-display);font-size:1.1rem;flex:none}
+.ctitle{flex:1;min-width:0}
+.pg{font-size:.82rem;color:var(--muted)}
+.badge{font-size:.78rem;font-weight:700;border-radius:999px;padding:4px 10px;display:grid;line-height:1.2}
+.badge small{font-weight:400}
+.badge.swap{background:var(--accent-soft);color:var(--accent)}
+.badge.pair{background:var(--warn-soft);color:var(--warn)}
+.q{background:var(--surface-2);border-radius:12px;padding:12px;display:grid;gap:8px;font-size:.95rem}
+.q blockquote{margin:0;padding-left:12px;border-left:3px solid var(--line);font-style:italic}
+.roman{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.roman span{font-weight:700;display:inline-block;min-width:1.8em}
+.relq{display:grid;grid-template-columns:1fr 1.6fr;gap:10px}
+.relq ul{list-style:none;margin:0;padding:0;display:grid;gap:3px;min-width:0}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ans{border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:center;min-width:0}
+.ans .lab{grid-column:1/-1;font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+.ans .oval{display:grid;place-items:center;width:1.9em;height:1.9em;border-radius:50%;font-weight:700}
+.ans .txt{min-width:0;font-size:.93rem}
+.ans.bad{background:var(--bad-soft)} .ans.bad .lab{color:var(--bad)} .ans.bad .oval{border:2px solid var(--bad);color:var(--bad);text-decoration:line-through}
+.ans.ok{background:var(--ok-soft)} .ans.ok .lab{color:var(--ok)} .ans.ok .oval{background:var(--ok);color:var(--surface)}
+.match{display:grid;gap:6px}
+.mrow{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1.5fr);align-items:center;gap:6px;font-size:.92rem}
+.mleft{background:var(--accent-soft);border-radius:8px;padding:6px 8px;font-weight:700}
+.mright{background:var(--ok-soft);border-radius:8px;padding:6px 8px}
+.mline{height:2px;background:var(--ok)}
+.orders{display:grid;gap:10px}
+.olab{font-size:.8rem;font-weight:700;margin-bottom:4px}
+.bad-t{color:var(--bad)} .ok-t{color:var(--ok)}
+.chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:4px 10px 4px 4px;font-size:.88rem}
+.chip i{font-style:normal;display:grid;place-items:center;width:1.5em;height:1.5em;border-radius:50%;background:var(--surface);font-weight:700;font-size:.8rem}
+.chip.off{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.good .chip{background:var(--ok-soft);border-color:transparent}
+.pyr{display:grid;justify-items:center;gap:4px}
+.lvl{width:var(--w);max-width:100%;background:var(--surface-2);border-radius:8px;padding:6px 10px;text-align:center;font-size:.85rem;display:grid}
+.lvl span{color:var(--muted);font-size:.78rem}
+.lvl em{font-style:normal;font-weight:700;font-size:.78rem}
+.lvl.hit{background:var(--ok-soft)} .lvl.hit em{color:var(--ok)}
+.lvl.miss{background:var(--bad-soft)} .lvl.miss em{color:var(--bad)}
+.why{display:grid;gap:6px}
+.h{font-weight:700;font-family:var(--font-display)}
+.en{color:var(--muted);font-size:.93rem}
+.applebox{display:grid;grid-template-columns:44px 1fr;gap:12px;background:var(--apple-soft);border-radius:12px;padding:12px}
+.applebox>div{display:grid;gap:4px;min-width:0}
+.apple{width:44px;height:44px}
+.trick{border-top:1px dashed var(--line);padding-top:10px;font-size:.95rem}
+.foot{color:var(--muted);font-size:.85rem;text-align:center}
+@media (max-width:560px){.two,.answers,.relq{grid-template-columns:1fr}.mrow{grid-template-columns:1fr;gap:2px}.mline{display:none}}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:8px}
+</style>
+<main class="wrap">
+
+<header style="display:grid;gap:6px">
+  <p class="eyebrow">Simulacro Módulo 1 · Forma C · 23 de octubre de 2026</p>
+  <h1>Val, vamos a revisar tus 22 errores</h1>
+  <p class="sub">Te preparé esta ficha para que veas cada pregunta paso a paso, con ejemplos de todos los días. Léela con calma, una tarjeta a la vez.</p>
+</header>
+<section class="score" aria-label="Resultado">
+  <div class="tile"><div class="n">28 / 50</div><div class="l">aciertos · calificación 5.6 (te faltaron sólo 2 para aprobar)</div></div>
+  <div class="tile hot"><div class="n">7</div><div class="l">errores por intercambiar dos elementos</div></div>
+  <div class="tile"><div class="n">14 + 1</div><div class="l">conceptos confundidos y una pregunta sin contestar</div></div>
+  <div class="tile"><div class="n">7.25</div><div class="l">tu simulacro anterior: ya demostraste que puedes</div></div>
+</section>
+
+
+
+<section class="panel" aria-labelledby="tech">
+  <h2 id="tech">Lo que puedes hacer en los reactivos de ordenar y relacionar</h2>
+  <p>En 7 preguntas elegiste una opción casi igual a la correcta, con <b>dos elementos cambiados de lugar</b>. Sabes los temas; lo que hay que cuidar es cómo comparas las opciones. Haz esto:</p>
+  <ol class="steps">
+    <li><b>Tapa las opciones</b> con tu mano o con una hoja.</li>
+    <li><b>Escribe tu respuesta</b> en el cuadernillo antes de verlas. Ejemplo: «IV, II, I, III».</li>
+    <li><b>Destapa y compara</b> letra por letra. Elige sólo la que coincide <b>exactamente</b>.</li>
+    <li>En relacionar columnas, <b>empieza por la pareja más segura</b> y tacha las opciones que no la tengan.</li>
+    <li>Al final, <b>revisa que las 50 preguntas tengan óvalo</b>. No dejes ninguna en blanco.</li>
+  </ol>
+  
+</section>
+<nav class="panel" aria-label="Índice de preguntas"><h2>Ir a una pregunta</h2><div class="idx"><a href="#q1" class="swap" aria-label="Pregunta 1">1</a><a href="#q4" class="" aria-label="Pregunta 4">4</a><a href="#q7" class="" aria-label="Pregunta 7">7</a><a href="#q8" class="swap" aria-label="Pregunta 8">8</a><a href="#q9" class="" aria-label="Pregunta 9">9</a><a href="#q13" class="" aria-label="Pregunta 13">13</a><a href="#q15" class="swap" aria-label="Pregunta 15">15</a><a href="#q19" class="" aria-label="Pregunta 19">19</a><a href="#q21" class="" aria-label="Pregunta 21">21</a><a href="#q23" class="" aria-label="Pregunta 23">23</a><a href="#q24" class="swap" aria-label="Pregunta 24">24</a><a href="#q25" class="" aria-label="Pregunta 25">25</a><a href="#q27" class="" aria-label="Pregunta 27">27</a><a href="#q29" class="" aria-label="Pregunta 29">29</a><a href="#q30" class="" aria-label="Pregunta 30">30</a><a href="#q31" class="swap" aria-label="Pregunta 31">31</a><a href="#q37" class="" aria-label="Pregunta 37">37</a><a href="#q41" class="swap" aria-label="Pregunta 41">41</a><a href="#q44" class="" aria-label="Pregunta 44">44</a><a href="#q45" class="swap" aria-label="Pregunta 45">45</a><a href="#q48" class="" aria-label="Pregunta 48">48</a><a href="#q50" class="" aria-label="Pregunta 50">50</a></div><p class="legend">Los números con borde de color son de intercambiar dos elementos.</p></nav>
+<section class="unit" aria-label="Unidad 1"><p class="eyebrow">Unidad 1 · 11 de 19 correctas</p><h2>Aprender y lograr mis metas personales</h2></section>
+
+<article class="card" id="q1">
+  <header class="chead">
+    <span class="qn">1</span>
+    <div class="ctitle"><h3>El contrato como herramienta de gestión</h3><p class="pg">Libro, pág. 17</p></div>
+    <span class="badge swap">Intercambiaste dos elementos</span>
+  </header>
+  <div class="q"><p class="stem">Relaciona cada elemento básico de un contrato con su descripción.</p><div class="relq"><ul><li><b>I.</b> Encabezado</li><li><b>II.</b> Declaraciones</li><li><b>III.</b> Cláusulas</li><li><b>IV.</b> Anexos</li></ul><ul><li><b>a)</b> Documentos que amplían o detallan algún punto</li><li><b>b)</b> Referencia de quienes participan y el tipo de contrato</li><li><b>c)</b> Enunciado de los compromisos que se asumen</li><li><b>d)</b> Enunciados que describen a las partes</li></ul></div></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">B</span><span class="txt">I: b - II: c - III: d - IV: a</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">D</span><span class="txt">I: b - II: d - III: c - IV: a</span></div>
+  </div>
+  <div class="match" role="table" aria-label="Relación correcta"><div class="mrow" role="row"><span class="mleft" role="cell">Encabezado</span><span class="mline" aria-hidden="true"></span><span class="mright" role="cell"><b>b)</b> Quiénes participan y qué contrato es</span></div><div class="mrow" role="row"><span class="mleft" role="cell">Declaraciones</span><span class="mline" aria-hidden="true"></span><span class="mright" role="cell"><b>d)</b> Describen a las partes</span></div><div class="mrow" role="row"><span class="mleft" role="cell">Cláusulas</span><span class="mline" aria-hidden="true"></span><span class="mright" role="cell"><b>c)</b> Compromisos que se asumen</span></div><div class="mrow" role="row"><span class="mleft" role="cell">Anexos</span><span class="mline" aria-hidden="true"></span><span class="mright" role="cell"><b>a)</b> Documentos que amplían un punto</span></div></div>
+  <div class="why"><p class="h">¿Por qué?</p><p>Intercambiaste <b>Declaraciones</b> y <b>Cláusulas</b>. Las declaraciones dicen <b>quién es</b> cada parte; las cláusulas dicen <b>qué promete</b> cada parte.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>Cuando contratas un plan de celular: el <b>encabezado</b> dice «Contrato entre Val y la compañía». Las <b>declaraciones</b> dicen quién es cada uno: «Val es estudiante y vive en Neza». Las <b>cláusulas</b> dicen lo que cada uno promete: «Val pagará $200 al mes; la compañía dará 5 GB». El <b>anexo</b> es la hoja extra con la lista de precios.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> Declaración = <b>de</b>scribe. Cláusula = <b>c</b>ompromiso.</p>
+</article>
+
+<article class="card" id="q4">
+  <header class="chead">
+    <span class="qn">4</span>
+    <div class="ctitle"><h3>Desarrollo personal y sus etapas (Erikson)</h3><p class="pg">Libro, pág. 26</p></div>
+    <span class="badge pair">Confundiste dos conceptos</span>
+  </header>
+  <div class="q"><p class="stem">Don Ramón tiene 68 años. Revisa lo que ha alcanzado y lo que dejó de hacer, y se siente conforme con su proyecto de vida. Según Erik Erikson, ¿qué etapa vive?</p></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">B</span><span class="txt">Generatividad vs. estancamiento</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">A</span><span class="txt">Integridad del yo vs. desesperación</span></div>
+  </div>
+  
+  <div class="why"><p class="h">¿Por qué?</p><p>Confundiste <b>Generatividad</b> con <b>Integridad del yo</b>. Don Ramón tiene <b>68 años</b> y hace un balance de su vida: eso es Integridad del yo (60 años en adelante). Generatividad es de 25 a 60 años: trabajo, familia, ayudar a otros.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>Piensa en tu abuelito sentado viendo fotos viejas y diciendo «valió la pena todo lo que hice»: eso es Integridad del yo. Tu mamá trabajando y sacando adelante a la familia: eso es Generatividad.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> Pregunta primero la <b>edad</b>: 60 o más → Integridad.</p>
+</article>
+
+<article class="card" id="q7">
+  <header class="chead">
+    <span class="qn">7</span>
+    <div class="ctitle"><h3>Perfil de egreso: Marco curricular común</h3><p class="pg">Libro, pág. 38</p></div>
+    <span class="badge pair">Confundiste dos conceptos</span>
+  </header>
+  <div class="q"><p class="stem">Para dar a la educación media superior una identidad clara, la SEP propuso como perfil de egreso un documento que enumera las competencias que deben tener quienes concluyen el bachillerato. ¿Cómo se llama?</p></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">B</span><span class="txt">Plan de vida y carrera</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">A</span><span class="txt">Marco curricular común</span></div>
+  </div>
+  
+  <div class="why"><p class="h">¿Por qué?</p><p>El documento de la SEP que dice qué competencias deben tener <b>todos</b> los egresados es el <b>Marco curricular común</b>. El plan de vida es tu proyecto personal, no un documento de la SEP.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>Es como el reglamento de la liga de futbol: es el <b>mismo para todos</b> los equipos. El Marco curricular común es la lista de lo que <b>todos</b> los que terminan la prepa deben saber hacer, sin importar en qué escuela estudiaron.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> Perfil de egreso = <b>M</b>arco <b>C</b>urricular <b>C</b>omún (<b>MCC</b>).</p>
+</article>
+
+<article class="card" id="q8">
+  <header class="chead">
+    <span class="qn">8</span>
+    <div class="ctitle"><h3>La modalidad no escolarizada</h3><p class="pg">Libro, pág. 40</p></div>
+    <span class="badge swap">Intercambiaste dos elementos</span>
+  </header>
+  <div class="q"><p class="stem">Relaciona cada componente de la experiencia educativa con la forma en que se maneja en la Preparatoria Abierta.</p><div class="relq"><ul><li><b>I.</b> Trayectoria curricular</li><li><b>II.</b> Mediación docente</li><li><b>III.</b> Evaluación y acreditación</li></ul><ul><li><b>a)</b> Presentar el examen de cada módulo ante la autoridad educativa</li><li><b>b)</b> Definir tu propia ruta; no hay un orden preestablecido</li><li><b>c)</b> No hay apoyo directo y constante de un profesor; puedes solicitar asesoría</li><li><b>d)</b> Asistir a un plantel en horarios fijos</li></ul></div></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">A</span><span class="txt">I: d - II: c - III: a</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">C</span><span class="txt">I: b - II: c - III: a</span></div>
+  </div>
+  <div class="match" role="table" aria-label="Relación correcta"><div class="mrow" role="row"><span class="mleft" role="cell">Trayectoria curricular</span><span class="mline" aria-hidden="true"></span><span class="mright" role="cell"><b>b)</b> Tú defines tu ruta</span></div><div class="mrow" role="row"><span class="mleft" role="cell">Mediación docente</span><span class="mline" aria-hidden="true"></span><span class="mright" role="cell"><b>c)</b> No hay profesor constante; hay asesoría</span></div><div class="mrow" role="row"><span class="mleft" role="cell">Evaluación y acreditación</span><span class="mline" aria-hidden="true"></span><span class="mright" role="cell"><b>a)</b> Examen de cada módulo ante la autoridad</span></div></div>
+  <div class="why"><p class="h">¿Por qué?</p><p>«Asistir a un plantel en horarios fijos» es de la escuela <b>escolarizada</b>, no de la Preparatoria Abierta. En la abierta la trayectoria la decides tú.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>En la prepa abierta es como ver una serie en streaming: tú decides <b>qué capítulo ves y cuándo</b> (trayectoria). No hay un maestro a tu lado todo el tiempo, pero puedes pedir ayuda a un asesor (mediación docente). Y para que cuente, presentas el examen (evaluación).</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> Si una opción habla de horarios fijos y plantel, <b>no es la prepa abierta</b>.</p>
+</article>
+
+<article class="card" id="q9">
+  <header class="chead">
+    <span class="qn">9</span>
+    <div class="ctitle"><h3>Estudio independiente</h3><p class="pg">Libro, pág. 42-43</p></div>
+    <span class="badge pair">Confundiste dos conceptos</span>
+  </header>
+  <div class="q"><p class="stem">Plantear alternativas de solución a los problemas, explorar distintos planteamientos y adoptar una postura personal en los debates son acciones de la tarea del estudio independiente llamada:</p></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">A</span><span class="txt">Gestionar o administrar tu proceso de aprendizaje</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">D</span><span class="txt">Asumir una postura crítica y propositiva</span></div>
+  </div>
+  
+  <div class="why"><p class="h">¿Por qué?</p><p>«Plantear alternativas» y «adoptar una postura en los debates» es <b>proponer</b> y <b>criticar</b>: postura crítica y propositiva. Gestionar es organizar tiempo, metas y recursos.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p><b>Gestionar</b> es organizarte: hacer tu horario y tu lista de pendientes. <b>Postura crítica y propositiva</b> es decir: «Este plan no funciona, <b>propongo</b> que lo hagamos de otra manera».</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> Propositiva = <b>propone</b>.</p>
+</article>
+
+<article class="card" id="q13">
+  <header class="chead">
+    <span class="qn">13</span>
+    <div class="ctitle"><h3>La construcción del conocimiento</h3><p class="pg">Libro, pág. 67</p></div>
+    <span class="badge pair">Confundiste dos conceptos</span>
+  </header>
+  <div class="q"><p class="stem">Proceso de pensamiento que implica analizar algo y llegar a consecuencias que no resultan evidentes; es decir, deducir.</p></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">B</span><span class="txt">Memorización</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">C</span><span class="txt">Inferencia</span></div>
+  </div>
+  
+  <div class="why"><p class="h">¿Por qué?</p><p><b>Inferir</b> es llegar a una conclusión que nadie te dijo, a partir de pistas. Memorizar es sólo repetir lo que ya te dijeron.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>Llegas a casa, ves la puerta abierta, lodo en el piso y al perro mojado. Nadie te dijo nada, pero <b>infieres</b> que el perro salió a la lluvia y se metió. Inferir es ser detective: sacar conclusiones con pistas.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> Inferir = ser <b>detective</b>.</p>
+</article>
+
+<article class="card" id="q15">
+  <header class="chead">
+    <span class="qn">15</span>
+    <div class="ctitle"><h3>Técnicas de estudio (organizadores gráficos)</h3><p class="pg">Libro, pág. 31 y 72</p></div>
+    <span class="badge swap">Intercambiaste dos elementos</span>
+  </header>
+  <div class="q"><p class="stem">Ordena los pasos para elaborar un mapa conceptual.</p><ol class="roman"><li><span>I.</span> Utilizar palabras conectoras para relacionar los conceptos</li><li><span>II.</span> Leer el texto y subrayar los conceptos clave</li><li><span>III.</span> Colocar los conceptos específicos debajo del concepto general</li><li><span>IV.</span> Escribir en un recuadro el concepto más importante y general</li></ol></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">A</span><span class="txt">II, III, IV y I</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">D</span><span class="txt">II, IV, III y I</span></div>
+  </div>
+  <div class="orders"><div><p class="olab bad-t">Tu orden</p><ol class="chips"><li class="chip"><i>1</i>Leer y subrayar</li><li class="chip off"><i>2</i>Conceptos específicos</li><li class="chip off"><i>3</i>Concepto general</li><li class="chip"><i>4</i>Palabras conectoras</li></ol></div><div><p class="olab ok-t">Orden correcto</p><ol class="chips good"><li class="chip"><i>1</i>Leer y subrayar</li><li class="chip"><i>2</i>Concepto general</li><li class="chip"><i>3</i>Conceptos específicos</li><li class="chip"><i>4</i>Palabras conectoras</li></ol></div></div>
+  <div class="why"><p class="h">¿Por qué?</p><p>Pusiste los conceptos específicos antes del concepto general. Primero va el concepto <b>más importante y general</b> y después los específicos debajo.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>Es como armar un árbol genealógico: primero pones al <b>abuelo</b> arriba (el concepto general) y después, abajo, a sus hijos y nietos (los conceptos específicos). No puedes poner a los nietos sin saber de quién vienen.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> Leer → Abuelo (general) → Hijos (específicos) → Conectar → Unir con líneas.</p>
+</article>
+
+<article class="card" id="q19">
+  <header class="chead">
+    <span class="qn">19</span>
+    <div class="ctitle"><h3>Elaboración del contrato con el procesador de palabras</h3><p class="pg">Libro, pág. 93</p></div>
+    <span class="badge pair">Dato puntual</span>
+  </header>
+  <div class="q"><p class="stem">Al capturar su contrato en el procesador de palabras, Rosa escribe los títulos en mayúsculas. Según el módulo, ¿qué debe hacer con los acentos?</p></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">A</span><span class="txt">Omitirlos, porque las mayúsculas no se acentúan</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">D</span><span class="txt">Acentuar todas las palabras que lo requieran, aunque estén en mayúsculas</span></div>
+  </div>
+  
+  <div class="why"><p class="h">¿Por qué?</p><p>Las mayúsculas <b>sí se acentúan</b>. No hay ninguna regla que diga que se omiten; esa costumbre venía de las máquinas de escribir.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>Si escribes en mayúsculas «CANCIÓN DE CAMIÓN», las dos palabras llevan acento. Que estén en mayúsculas no les quita el acento.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> Mayúscula <b>no</b> borra el acento.</p>
+</article>
+<section class="unit" aria-label="Unidad 2"><p class="eyebrow">Unidad 2 · 8 de 16 correctas</p><h2>Leer y escribir para aprender</h2></section>
+
+<article class="card" id="q21">
+  <header class="chead">
+    <span class="qn">21</span>
+    <div class="ctitle"><h3>¿Qué es un texto?</h3><p class="pg">Libro, pág. 102-103</p></div>
+    <span class="badge pair">Confundiste dos conceptos</span>
+  </header>
+  <div class="q"><p class="stem">Elige dos ejemplos que, de acuerdo con el módulo, también son textos.</p><ol class="roman"><li><span>I.</span> La conversación de unos alumnos en el patio</li><li><span>II.</span> Una pancarta publicitaria</li><li><span>III.</span> Una idea que nunca se comunica</li><li><span>IV.</span> Una hoja en blanco</li></ol></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">A</span><span class="txt">II y IV</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">D</span><span class="txt">I y II</span></div>
+  </div>
+  
+  <div class="why"><p class="h">¿Por qué?</p><p>Un texto es algo que <b>comunica</b>. Una hoja en blanco no comunica nada. La conversación del patio y la pancarta sí comunican.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>Un mensaje de WhatsApp, un letrero de «Se vende» o una plática con tus amigos <b>comunican algo</b>: son textos. Un chat vacío no te dice nada: no es texto.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> ¿Me dice algo? Entonces es texto.</p>
+</article>
+
+<article class="card" id="q23">
+  <header class="chead">
+    <span class="qn">23</span>
+    <div class="ctitle"><h3>Tipos de textos: artículo de divulgación científica</h3><p class="pg">Libro, pág. 109</p></div>
+    <span class="badge pair">Confundiste dos conceptos</span>
+  </header>
+  <div class="q"><p class="stem">Por lo general, un artículo de divulgación científica se estructura en:</p></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">D</span><span class="txt">una identificación, una sinopsis y una crítica</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">C</span><span class="txt">una introducción breve, un desarrollo más extenso y una conclusión de extensión semejante a la introducción</span></div>
+  </div>
+  
+  <div class="why"><p class="h">¿Por qué?</p><p>«Identificación, sinopsis y crítica» es la estructura de la <b>reseña</b>. El artículo de divulgación tiene <b>introducción breve, desarrollo extenso y conclusión</b>.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>Un video de YouTube que explica «¿Por qué el cielo es azul?» empieza con la pregunta (introducción), luego explica con detalle (desarrollo) y al final resume (conclusión). Así es el artículo de divulgación.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> Divulgación = <b>pregunta → explicación → conclusión</b>.</p>
+</article>
+
+<article class="card" id="q24">
+  <header class="chead">
+    <span class="qn">24</span>
+    <div class="ctitle"><h3>Textos periodísticos: la nota informativa</h3><p class="pg">Libro, pág. 114</p></div>
+    <span class="badge swap">Intercambiaste dos elementos</span>
+  </header>
+  <div class="q"><p class="stem">Relaciona cada parte de la nota informativa con su función.</p><div class="relq"><ul><li><b>I.</b> Titular</li><li><b>II.</b> Bajada</li><li><b>III.</b> Lead o entrada</li></ul><ul><li><b>a)</b> Primer párrafo; resume lo principal: qué, quién, cuándo, dónde y por qué</li><li><b>b)</b> Amplía de forma sintética la información del titular</li><li><b>c)</b> Cuenta lo más esencial y funciona como «anzuelo» para el lector</li><li><b>d)</b> Detalles menos importantes con los que cierra la nota</li></ul></div></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">D</span><span class="txt">I: a - II: b - III: c</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">A</span><span class="txt">I: c - II: b - III: a</span></div>
+  </div>
+  <div class="match" role="table" aria-label="Relación correcta"><div class="mrow" role="row"><span class="mleft" role="cell">Titular</span><span class="mline" aria-hidden="true"></span><span class="mright" role="cell"><b>c)</b> Lo esencial; el anzuelo</span></div><div class="mrow" role="row"><span class="mleft" role="cell">Bajada</span><span class="mline" aria-hidden="true"></span><span class="mright" role="cell"><b>b)</b> Amplía el titular</span></div><div class="mrow" role="row"><span class="mleft" role="cell">Lead o entrada</span><span class="mline" aria-hidden="true"></span><span class="mright" role="cell"><b>a)</b> Primer párrafo: qué, quién, cuándo…</span></div></div>
+  <div class="why"><p class="h">¿Por qué?</p><p>Acertaste la bajada, pero intercambiaste <b>titular</b> y <b>lead</b>. El titular es la frase corta y llamativa; el lead es el <b>primer párrafo</b> que responde qué, quién, cuándo, dónde y por qué.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>En una noticia del periódico: el <b>titular</b> es la frase grande que te atrapa: «¡Gana Neza el torneo!». La <b>bajada</b> es la frase de abajo que explica un poco más: «El equipo venció 3-1 en la final». El <b>lead</b> es el primer párrafo: qué, quién, cuándo, dónde y por qué.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> Titular = <b>anzuelo</b> (corto). Lead = <b>primer párrafo</b> (largo).</p>
+</article>
+
+<article class="card" id="q25">
+  <header class="chead">
+    <span class="qn">25</span>
+    <div class="ctitle"><h3>Textos periodísticos: la entrevista</h3><p class="pg">Libro, pág. 115</p></div>
+    <span class="badge pair">Confundiste dos conceptos</span>
+  </header>
+  <div class="q"><p class="stem">Una entrevista periodística es de __________ cuando el entrevistado es una persona con autoridad para hablar de un asunto, por su cargo o por su conocimiento.</p></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">D</span><span class="txt">carácter descriptivo</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">B</span><span class="txt">opinión</span></div>
+  </div>
+  
+  <div class="why"><p class="h">¿Por qué?</p><p>En el libro sólo hay dos tipos de entrevista: <b>noticiosa</b> (habla un testigo del hecho) y <b>de opinión</b> (habla alguien con autoridad por su cargo o su conocimiento). «Descriptiva» no es un tipo de entrevista.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>Si entrevistan a una vecina que vio el choque, es noticiosa. Si entrevistan al director de Protección Civil para que explique qué hacer en un sismo, es de opinión: habla porque sabe y tiene el cargo.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> ¿Habla un <b>experto</b>? → opinión. ¿Habla un <b>testigo</b>? → noticiosa.</p>
+</article>
+
+<article class="card" id="q27">
+  <header class="chead">
+    <span class="qn">27</span>
+    <div class="ctitle"><h3>El proceso lector</h3><p class="pg">Libro, pág. 120</p></div>
+    <span class="badge pair">Confundiste dos conceptos</span>
+  </header>
+  <div class="q"><p class="stem">En el proceso lector se reconocen primero las palabras, luego la estructura de las frases y oraciones, y finalmente la unidad mínima de sentido de un texto, que es:</p></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">C</span><span class="txt">el título</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">D</span><span class="txt">el párrafo</span></div>
+  </div>
+  
+  <div class="why"><p class="h">¿Por qué?</p><p>El lector reconoce palabras, luego frases y oraciones, y al final el <b>párrafo</b>, que es la unidad mínima de sentido. El título ayuda, pero no es la unidad mínima.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>En una canción, una palabra suelta no te cuenta nada; una <b>estrofa</b> completa ya te cuenta una idea. En un texto, esa «estrofa» es el párrafo.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> Palabra → oración → <b>párrafo</b> (ahí ya hay sentido).</p>
+</article>
+
+<article class="card" id="q29">
+  <header class="chead">
+    <span class="qn">29</span>
+    <div class="ctitle"><h3>Los modos de leer</h3><p class="pg">Libro, pág. 128-129</p></div>
+    <span class="badge pair">Confundiste dos conceptos</span>
+  </header>
+  <div class="q"><p class="stem">Mientras lee un artículo, Pedro consulta en el diccionario y en Internet las palabras y los datos que desconoce para darle sentido al texto. ¿Qué modo de lectura realiza?</p></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">B</span><span class="txt">Prelectura o de exploración</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">A</span><span class="txt">Global</span></div>
+  </div>
+  
+  <div class="why"><p class="h">¿Por qué?</p><p>En la lectura <b>global</b> consultas lo que <b>no conoces</b> (diccionario, Internet). La prelectura es sólo un vistazo general.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p><b>Prelectura:</b> ves la portada y los títulos para saber de qué trata. <b>Global:</b> encuentras una palabra que no conoces y la buscas en Google o en el diccionario. <b>Comprensiva:</b> lees a fondo y analizas todo.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> Global = <b>Google</b> y diccionario.</p>
+</article>
+
+<article class="card" id="q30">
+  <header class="chead">
+    <span class="qn">30</span>
+    <div class="ctitle"><h3>Resumir</h3><p class="pg">Libro, pág. 133-134</p></div>
+    <span class="badge pair">Confundiste dos conceptos</span>
+  </header>
+  <div class="q"><p class="stem">Al elaborar un resumen, la fase en la que se aplica el proceso de generalización y construcción, es decir, en la que se redacta la síntesis con las propias palabras, es la fase de:</p></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">A</span><span class="txt">comprensión</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">C</span><span class="txt">producción</span></div>
+  </div>
+  
+  <div class="why"><p class="h">¿Por qué?</p><p>El resumen tiene dos fases: <b>comprensión</b> (lees, seleccionas y cancelas ideas) y <b>producción</b> (redactas con tus propias palabras). La pregunta hablaba de redactar, así que es producción.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>Para contarle a un amigo una película: primero <b>escoges</b> las escenas importantes y descartas las demás (comprensión). Después se la <b>cuentas</b> con tus palabras (producción).</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> Si la pregunta dice <b>redactar</b>, es producción.</p>
+</article>
+
+<article class="card" id="q31">
+  <header class="chead">
+    <span class="qn">31</span>
+    <div class="ctitle"><h3>El proceso de escritura</h3><p class="pg">Libro, pág. 139</p></div>
+    <span class="badge swap">Intercambiaste dos elementos</span>
+  </header>
+  <div class="q"><p class="stem">Ordena las fases del proceso de escritura.</p><ol class="roman"><li><span>I.</span> Revisar</li><li><span>II.</span> Redactar</li><li><span>III.</span> Reescribir</li><li><span>IV.</span> Planear</li></ol></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">D</span><span class="txt">IV, II, III y I</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">A</span><span class="txt">IV, II, I y III</span></div>
+  </div>
+  <div class="orders"><div><p class="olab bad-t">Tu orden</p><ol class="chips"><li class="chip"><i>1</i>Planear</li><li class="chip"><i>2</i>Redactar</li><li class="chip off"><i>3</i>Reescribir</li><li class="chip off"><i>4</i>Revisar</li></ol></div><div><p class="olab ok-t">Orden correcto</p><ol class="chips good"><li class="chip"><i>1</i>Planear</li><li class="chip"><i>2</i>Redactar</li><li class="chip"><i>3</i>Revisar</li><li class="chip"><i>4</i>Reescribir</li></ol></div></div>
+  <div class="why"><p class="h">¿Por qué?</p><p>Pusiste <b>Reescribir</b> antes de <b>Revisar</b>. Primero revisas qué está mal y después lo reescribes; no puedes corregir algo que todavía no revisas.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>Es como mandar un mensaje importante: primero piensas qué vas a decir (planear), lo escribes (redactar), lo lees para ver si tiene errores (revisar) y lo corriges antes de enviarlo (reescribir). No puedes revisar un mensaje que todavía no escribes.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> <b>P-R-R-R</b>: Planear, Redactar, Revisar, Reescribir.</p>
+</article>
+<section class="unit" aria-label="Unidad 3"><p class="eyebrow">Unidad 3 · 9 de 15 correctas</p><h2>Analizar y escribir para comunicar</h2></section>
+
+<article class="card" id="q37">
+  <header class="chead">
+    <span class="qn">37</span>
+    <div class="ctitle"><h3>Elementos macroestructurales del texto</h3><p class="pg">Libro, pág. 163</p></div>
+    <span class="badge pair">Confundiste dos conceptos</span>
+  </header>
+  <div class="q"><p class="stem">Según Teun van Dijk, la __________ constituye el contenido del texto, mientras que la __________ representa la forma en que se organiza la información.</p></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">D</span><span class="txt">introducción - conclusión</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">A</span><span class="txt">macroestructura - superestructura</span></div>
+  </div>
+  
+  <div class="why"><p class="h">¿Por qué?</p><p>Teun van Dijk habla de <b>macroestructura</b> (el contenido, el tema) y <b>superestructura</b> (la forma en que se organiza la información). Introducción y conclusión son partes de un texto, no los nombres que usa Van Dijk.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>En una canción, la <b>macroestructura</b> es de qué habla (un amor perdido). La <b>superestructura</b> es cómo está armada: estrofa, coro, estrofa, coro.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> <b>Macro</b> = de qué trata. <b>Súper</b> = cómo está armado.</p>
+</article>
+
+<article class="card" id="q41">
+  <header class="chead">
+    <span class="qn">41</span>
+    <div class="ctitle"><h3>Actividades para una lectura crítica</h3><p class="pg">Libro, pág. 176-182</p></div>
+    <span class="badge swap">Intercambiaste dos elementos</span>
+  </header>
+  <div class="q"><p class="stem">Ordena las tres actividades fundamentales de la lectura crítica.</p><ol class="roman"><li><span>I.</span> Construir la interpretación</li><li><span>II.</span> Identificar al autor</li><li><span>III.</span> Identificar las características del texto</li></ol></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">B</span><span class="txt">III, II y I</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">D</span><span class="txt">II, III y I</span></div>
+  </div>
+  <div class="orders"><div><p class="olab bad-t">Tu orden</p><ol class="chips"><li class="chip off"><i>1</i>Características del texto</li><li class="chip off"><i>2</i>Identificar al autor</li><li class="chip"><i>3</i>Construir la interpretación</li></ol></div><div><p class="olab ok-t">Orden correcto</p><ol class="chips good"><li class="chip"><i>1</i>Identificar al autor</li><li class="chip"><i>2</i>Características del texto</li><li class="chip"><i>3</i>Construir la interpretación</li></ol></div></div>
+  <div class="why"><p class="h">¿Por qué?</p><p>Pusiste <b>Identificar las características del texto</b> antes de <b>Identificar al autor</b>. Primero se revisa quién escribió (¿es confiable?) y después cómo es el texto.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>Antes de creer un video de TikTok, primero ves <b>quién lo subió</b> (¿es un médico o cualquier persona?), luego ves cómo está hecho y al final sacas tu conclusión.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> <b>¿Quién?</b> → <b>¿Cómo es?</b> → <b>¿Qué entiendo?</b></p>
+</article>
+
+<article class="card" id="q44">
+  <header class="chead">
+    <span class="qn">44</span>
+    <div class="ctitle"><h3>Aplicar técnicas analíticas y críticas</h3><p class="pg">Libro, pág. 186 y Apéndice 1</p></div>
+    <span class="badge pair">Confundiste dos conceptos</span>
+  </header>
+  <div class="q"><p class="stem">Elige dos habilidades que el módulo clasifica como propias de la lectura crítica.</p><ol class="roman"><li><span>I.</span> Verificar la actualidad del tema</li><li><span>II.</span> Identificar la coherencia de la macroestructura</li><li><span>III.</span> Identificar semejanzas y diferencias entre distintos documentos</li><li><span>IV.</span> Validar la confiabilidad de las fuentes</li></ol></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">B</span><span class="txt">I y II</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">A</span><span class="txt">I y IV</span></div>
+  </div>
+  
+  <div class="why"><p class="h">¿Por qué?</p><p>«Identificar la coherencia de la macroestructura» es de la lectura <b>analítica</b>. La lectura <b>crítica</b> valida la confiabilidad de las fuentes y verifica la actualidad del tema.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p><b>Analítica:</b> comparas dos celulares para ver en qué se parecen y en qué no. <b>Crítica:</b> te preguntas «¿esta reseña es confiable?» y «¿es de este año o ya es vieja?».</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> Crítica = <b>¿confío?</b> y <b>¿está actualizado?</b></p>
+</article>
+
+<article class="card" id="q45">
+  <header class="chead">
+    <span class="qn">45</span>
+    <div class="ctitle"><h3>Vamos a comentar</h3><p class="pg">Libro, pág. 192</p></div>
+    <span class="badge swap">Intercambiaste dos elementos</span>
+  </header>
+  <div class="q"><p class="stem">Ordena los apartados de la macroestructura de un comentario.</p><ol class="roman"><li><span>I.</span> Valoración</li><li><span>II.</span> Presentación</li><li><span>III.</span> Introducción</li><li><span>IV.</span> Argumento</li></ol></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">B</span><span class="txt">II, III, IV y I</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">C</span><span class="txt">III, II, IV y I</span></div>
+  </div>
+  <div class="orders"><div><p class="olab bad-t">Tu orden</p><ol class="chips"><li class="chip off"><i>1</i>Presentación</li><li class="chip off"><i>2</i>Introducción</li><li class="chip"><i>3</i>Argumento</li><li class="chip"><i>4</i>Valoración</li></ol></div><div><p class="olab ok-t">Orden correcto</p><ol class="chips good"><li class="chip"><i>1</i>Introducción</li><li class="chip"><i>2</i>Presentación</li><li class="chip"><i>3</i>Argumento</li><li class="chip"><i>4</i>Valoración</li></ol></div></div>
+  <div class="why"><p class="h">¿Por qué?</p><p>Intercambiaste <b>Introducción</b> y <b>Presentación</b>. La introducción va primero (qué tipo de texto es, autor, tiempo y lugar); la presentación describe brevemente el texto y sus temas.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>Cuando le recomiendas una canción a alguien: primero dices quién la canta y de qué año es (introducción), luego de qué trata (presentación), luego cuál es su mensaje (argumento) y al final si te gusta y por qué (valoración).</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> «<b>I</b>ba <b>P</b>ensando <b>A</b>lgo <b>V</b>alioso» = Introducción, Presentación, Argumento, Valoración.</p>
+</article>
+
+<article class="card" id="q48">
+  <header class="chead">
+    <span class="qn">48</span>
+    <div class="ctitle"><h3>Signos de puntuación (Apéndice 6)</h3><p class="pg">Libro, pág. 260</p></div>
+    <span class="badge pair">Confundiste dos conceptos</span>
+  </header>
+  <div class="q"><p class="stem">Según el apéndice de signos de puntuación del libro, la coma casi NO se usa para:</p></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">C</span><span class="txt">encerrar un dato o una explicación en medio de la oración</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">B</span><span class="txt">separar el sujeto del verbo</span></div>
+  </div>
+  
+  <div class="why"><p class="h">¿Por qué?</p><p>La coma <b>sí</b> se usa para encerrar una explicación en medio de la oración. Lo que casi <b>no</b> se hace es separar el <b>sujeto del verbo</b>.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>Bien: «Mi hermana, que canta muy bonito, ganó el concurso». Mal: «Mi hermana, ganó el concurso» (la coma separa a <i>mi hermana</i> de <i>ganó</i>).</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> ¿Quién + qué hizo? <b>Sin coma</b> en medio.</p>
+</article>
+
+<article class="card" id="q50">
+  <header class="chead">
+    <span class="qn">50</span>
+    <div class="ctitle"><h3>Relacionadores o conectores (Apéndice 5)</h3><p class="pg">Libro, pág. 145-146 y 259</p></div>
+    <span class="badge pair">Dato puntual</span>
+  </header>
+  <div class="q"><p class="stem">En el texto «Estudiar solo no significa estudiar sin ayuda», ¿qué relación establece el conector «sin embargo» en la tercera oración?</p></div>
+  <div class="answers">
+    <div class="ans bad"><span class="lab">Tu respuesta</span><span class="oval">–</span><span class="txt">Sin contestar</span></div>
+    <div class="ans ok"><span class="lab">Correcta</span><span class="oval">B</span><span class="txt">Oposición o contraste</span></div>
+  </div>
+  
+  <div class="why"><p class="h">¿Por qué?</p><p>Esta pregunta quedó <b>sin contestar</b> y se cuenta como error. «Sin embargo» indica <b>oposición o contraste</b>: une dos ideas que se contraponen.</p></div>
+  <div class="applebox"><svg class="apple" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--bulb)"/><rect x="9.5" y="17" width="5" height="1.6" rx=".8" fill="var(--stem)"/><rect x="10" y="19.4" width="4" height="1.6" rx=".8" fill="var(--stem)"/></svg><div><p class="h">Ejemplo de la vida diaria</p><p>«Me gusta mucho cantar; <b>sin embargo</b>, me da pena hacerlo en público». La segunda idea va en contra de la primera.</p></div></div>
+  <p class="trick"><b>Truco para recordar:</b> Antes de entregar, <b>revisa que las 50 tengan óvalo</b>. Una respuesta pensada siempre tiene oportunidad; una en blanco, nunca.</p>
+</article>
+<p class="foot">Val, tu meta para el siguiente simulacro es 36 aciertos o más, contestando las 50. Hay que repasar estas tarjetas y practicar la técnica; cualquier duda me la traes a la asesoría. Páginas del libro <i>De la información al conocimiento</i> (SEP, 2011).</p></main>
+</body></html>
